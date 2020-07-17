@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import reset from 'styled-reset'
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
         padding: 0; 
         font-size: 10px; 
     }
-`
+    .outer-wrapper {
+        max-width: 360px;
+        margin: 0 auto;
+    }
+`;
 
 export default GlobalStyle;
