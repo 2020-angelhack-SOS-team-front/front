@@ -16,6 +16,11 @@ const GlobalStyle = createGlobalStyle`
         max-width: 360px;
         margin: 0 auto;
     }
+
+    button {
+        border: none;
+        background-color: transparent;
+    }
 `;
 
 export default GlobalStyle;

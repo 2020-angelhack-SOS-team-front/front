@@ -6,7 +6,8 @@ import Markets from "./markets";
 import Market from "./market";
 import Cart from "./cart";
 import Purchase from "./purchase";
-// routing code 추가
+
+
 const App = () => {
   return (
     <BrowserRouter>

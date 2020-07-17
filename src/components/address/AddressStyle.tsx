@@ -9,11 +9,3 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 `
-
-export const Btn = styled.button`
-    font-size: 24px;
-    padding: 10px 15px;
-    background-color: #E53A40;
-    color: white;
-    font-weight: bold;
-`
