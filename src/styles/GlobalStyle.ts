@@ -19,6 +19,13 @@ const GlobalStyle = createGlobalStyle`
         margin: 0 auto;
     }
 
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
     button {
         border: none;
         background-color: transparent;

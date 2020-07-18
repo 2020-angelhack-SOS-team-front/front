@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import * as S from './AddressStyle'
+import UserDataContext from '../../store/UserData'
 
 // user가 주소를 입력하고 '확인' 버튼을 누르면
 // 다음 페이지로 넘길 때, OO시 OO구를 넘기고
@@ -7,16 +8,28 @@ import * as S from './AddressStyle'
 // 지금은 api 요청할 부분만 떼어냈는데, 유저가 주소 입력한거 전역 context로 가지고 있어야 할 듯
 
 const Address = () => {
-    const [address, setAddress] = useState<string>("")
-    const searchAddress = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const [sendData, setSendData] = useState<string>("")
+    const value = useContext(UserDataContext)
+    const iframeRef = useRef<HTMLIFrameElement>(null)
+
+    const searchAddress = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
 
         new (window as any).daum.Postcode({
             oncomplete: (data: any) => {
-                setAddress(data.sigungu)
-            }
-        }).open()
+                value.setData("address", data.address)
+                setSendData(data.sigungu)
+                if (iframeRef.current) iframeRef.current.style.display = "none"
+            },
+            width: "100%",
+            height: "100%",
+            maxSuggestItems: 5
+        }).embed(iframeRef.current)
+
+        if (iframeRef.current) iframeRef.current.style.display = "block"
     }
+
+    const enterDetailAddress = (e: React.ChangeEvent<HTMLInputElement>) => value.setData("detailAddress", e.target.value)
 
     useEffect(() => {
         const script = document.createElement("script")
@@ -25,14 +38,24 @@ const Address = () => {
         document.body.appendChild(script)
     }, [])
 
-    console.log(address)
+    console.log(value)
 
     return (
-        <S.Wrapper>
-            <input></input>
-            <button onClick={searchAddress}>주소 검색</button>
-            <input></input>
-        </S.Wrapper>
+        <>
+            <img className="header" src="/images/header_img.png"></img>
+            <S.Wrapper>
+                <S.Title>배달받고 싶은 주소를<br />입력하세요</S.Title>
+                <S.FindAddressWrapper onClick={searchAddress}>
+                    <S.FindAddressBtn>
+                        <S.FIndAddressImg src="/images/magnifying_glass_img.png" />
+                    </S.FindAddressBtn>
+                    <S.FindAddressInput placeholder="주소 찾기" value={value.data.address}></S.FindAddressInput>
+                </S.FindAddressWrapper>
+                <S.DetailAddressInput placeholder="상세 주소를 입력하세요(선택)" onChange={enterDetailAddress} value={value.data.detailAddress} />
+                <S.SubmitBtn>우리집 등록 완료</S.SubmitBtn>
+                <S.IframeWrapper ref={iframeRef}></S.IframeWrapper>
+            </S.Wrapper>
+        </>
     )
 }
 
