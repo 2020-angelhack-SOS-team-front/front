@@ -1,19 +1,40 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    background-color: #EFDC05;
+    width: 100%;
     height: 100vh;
 
     display: flex;
     flex-direction: column; 
-    justify-content: center;
     align-items: center;
 `
 
+export const Img = styled.img`
+    width: 318px;
+    height: 240px;
+    margin-top: 104px; 
+`
+
+export const Title = styled.h1`
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 16px; 
+`
+
+export const SubTitle = styled.h3`
+    font-size: 14px;
+    font-weight: normal;
+    margin: 12px 32px;
+`
+
+
+
 export const Btn = styled.button`
-    font-size: 24px;
-    padding: 10px 15px;
-    background-color: #E53A40;
+    width: 327px;
+    height: 52px;
+    font-size: 16px;
+    background-color: #2A8A67;
     color: white;
     font-weight: bold;
+    border-radius: 10px;
 `

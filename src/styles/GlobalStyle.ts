@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
         margin: 0; 
         padding: 0; 
         font-size: 10px; 
+        font-family: SpoqaHanSans;
+        color: #333333;
     }
     .outer-wrapper {
         max-width: 360px;
