@@ -99,11 +99,10 @@ const CartWrap = () => {
 };
 
 const Market = (props: any) => {
-
-  useEffect(() => {
-    console.log(props.history.location.state.data)
-    // TODO: 해당 data로 API 요청 필요
-  }, [props])
+  // useEffect(() => {
+  //   console.log(props.history.location.state.data);
+  //   // TODO: 해당 data로 API 요청 필요
+  // }, [props]);
 
   return (
     <div>
@@ -134,7 +133,9 @@ const Market = (props: any) => {
         </TitleLeft>
         <TitleRight>
           <SearchWrap />
-          <CartWrap />
+          <NavLink to="/cart">
+            <CartWrap />
+          </NavLink>
         </TitleRight>
       </Header>
       <Select>
