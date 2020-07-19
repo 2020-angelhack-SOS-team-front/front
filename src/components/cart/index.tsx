@@ -1,17 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import * as S from './CartStyle'
 import UserDataContext from '../../store/UserData'
 import { RouteComponentProps } from 'react-router-dom';
+import PurchaseModal from './PurchaseModal'
 
 interface Props extends RouteComponentProps { }
 
+// TODO: userData 에서 cart와 배송지 정보 가져오기
 const Cart = ({ history }: Props) => {
-    // TODO: userData 에서 cart와 배송지 정보 가져오기
+    const [isOpenModal, setIsOpenModal] = useState(false)
     const context = useContext(UserDataContext)
     const { data: shipInfo } = context
 
-    console.log(shipInfo)
-
+    const itemsPrice = 13650
+    const finalPrice = itemsPrice + 3000
 
     return (
         <>
@@ -39,19 +41,20 @@ const Cart = ({ history }: Props) => {
                 <S.PurchaseInfo>
                     <S.PurchaseRow>
                         <S.PurchaseVal>상품 금액</S.PurchaseVal>
-                        <S.PurchaseVal>{"13, 650"}원</S.PurchaseVal>
+                        <S.PurchaseVal>{itemsPrice.toLocaleString()}원</S.PurchaseVal>
                     </S.PurchaseRow>
                     <S.PurchaseRow>
                         <S.PurchaseVal>배송비</S.PurchaseVal>
-                        <S.PurchaseVal>{"3, 000"}원</S.PurchaseVal>
+                        <S.PurchaseVal>3,000원</S.PurchaseVal>
                     </S.PurchaseRow>
                     <S.Hr />
                     <S.PurchaseRow>
                         <S.PurchaseVal>결제 금액</S.PurchaseVal>
-                        <S.PurchaseVal>{"16, 650"}원</S.PurchaseVal>
+                        <S.PurchaseVal>{finalPrice.toLocaleString()}원</S.PurchaseVal>
                     </S.PurchaseRow>
-                    <S.PurchaseBtn>16,650원 주문하기</S.PurchaseBtn>
+                    <S.PurchaseBtn onClick={() => setIsOpenModal(true)}>{finalPrice.toLocaleString()}원 주문하기</S.PurchaseBtn>
                 </S.PurchaseInfo>
+                {isOpenModal && <PurchaseModal finalPrice={finalPrice} />}
             </S.Wrapper>
         </>
     )
