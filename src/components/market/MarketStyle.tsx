@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Switch, Route, NavLink, useParams } from "react-router-dom";
+import UserDataContext from "./../../store/UserData";
 
 export const Mobile = () => {
   return (
@@ -61,16 +62,26 @@ export const ListBox = () => {
   );
 };
 
+interface Card {
+  _id: string;
+  description: string;
+  image: string;
+  name: string;
+}
+
 export const CardList = () => {
+  const context = useContext(UserDataContext);
+  console.log(context);
   return (
     <Main>
-      <CardWrap />
-      <CardWrap />
-      <CardWrap />
-      <CardWrap />
-      <CardWrap />
-      <CardWrap />
-      <CardWrap />
+      {context.data.storeInfo.store.map((s: Card) => (
+        <CardWrap
+          key={s._id}
+          description={s.description}
+          image={s.image}
+          name={s.name}
+        />
+      ))}
     </Main>
   );
 };
@@ -120,16 +131,22 @@ const Card = styled.div`
   }
 `;
 
-export const CardWrap = () => {
+interface CardProps {
+  description: string;
+  image: string;
+  name: string;
+}
+
+export const CardWrap = ({ description, image, name }: CardProps) => {
   return (
     <Card>
       <div className="content">
         <div className="active">영업중</div>
-        <div className="name">만물상회</div>
-        <div className="info">그릇, 혼수 용품들을 취급 판매 점포</div>
+        <div className="name">{name}</div>
+        <div className="info">{description}</div>
       </div>
       <div className="img-wrap">
-        <Img src="/images/card.jpeg" alt="이미지" />
+        <Img src={image} alt="이미지" />
         <div className="item">판매 물품: #자기, #토기, #침구류</div>
       </div>
     </Card>
@@ -307,79 +324,54 @@ export const Confirm = styled.div`
 `;
 
 export const List = () => {
-  const { categoryId } = useParams();
+  const { categoryId } = useParams<{ categoryId: string }>();
   const [isCart, setCart] = useState<boolean>(false);
+  const context = useContext(UserDataContext);
   let id = 0;
-  const onCart = () => {
+  const onCart = (product: any) => () => {
+    console.log(product);
+    context.setCart([...context.data.cart, product]);
     setCart(!isCart);
     id = setTimeout(() => {
       setCart(false);
     }, 1000);
+    console.log(context);
   };
   useEffect(() => {
     return () => {
       clearTimeout(id);
     };
   }, [id]);
+  const obj: { [x: string]: string } = {
+    채소: "vegetable",
+    "과일·견과·쌀": "fruit_nut_rice",
+    "수산·해선·건어물": "seafood",
+    "국·반찬·메인요리": "soup_side_main",
+    "면·양념·오일": "myeon_spice_oil",
+    생활용품: "lifestyle",
+    특산품: "special",
+  };
+  const product = context.data.storeInfo.product.filter(
+    (p: any) => p.type === obj[`${categoryId}`]
+  );
   return (
     <>
       <CategoryBox as="div">{categoryId}</CategoryBox>
       <Main3>
-        <Food>
-          <div className="image">
-            <Img src="/images/egg.png" alt="음식" />
-            <CartIcon onCart={onCart} />
-          </div>
-          <div className="content">
-            <div className="store">만불 정육점</div>
-            <div className="name">한우 필렛 100g</div>
-            <div className="price">8750원</div>
-          </div>
-        </Food>
-        <Food>
-          <div className="image">
-            <Img src="/images/egg.png" alt="음식" />
-            <CartIcon onCart={onCart} />
-          </div>
-          <div className="content">
-            <div className="store">만불 정육점</div>
-            <div className="name">한우 필렛 100g</div>
-            <div className="price">8750원</div>
-          </div>
-        </Food>
-        <Food>
-          <div className="image">
-            <Img src="/images/egg.png" alt="음식" />
-            <CartIcon onCart={onCart} />
-          </div>
-          <div className="content">
-            <div className="store">만불 정육점</div>
-            <div className="name">한우 필렛 100g</div>
-            <div className="price">8750원</div>
-          </div>
-        </Food>
-        <Food>
-          <div className="image">
-            <Img src="/images/egg.png" alt="음식" />
-            <CartIcon onCart={onCart} />
-          </div>
-          <div className="content">
-            <div className="store">만불 정육점</div>
-            <div className="name">한우 필렛 100g</div>
-            <div className="price">8750원</div>
-          </div>
-        </Food>
-        <Food>
-          <div className="image">
-            <Img src="/images/egg.png" alt="음식" />
-            <CartIcon onCart={onCart} />
-          </div>
-          <div className="content">
-            <div className="store">만불 정육점</div>
-            <div className="name">한우 필렛 100g</div>
-            <div className="price">8750원</div>
-          </div>
-        </Food>
+        {product &&
+          product.map((p: any) => (
+            <Food key={p._id}>
+              <div className="image">
+                <Img src={p.image} alt="음식" />
+                <CartIcon onCart={onCart(p)} />
+              </div>
+              <div className="content">
+                <div className="store">{p.store.name}</div>
+                <div className="name">{p.name}</div>
+                <div className="price">{p.price}원</div>
+              </div>
+            </Food>
+          ))}
         {isCart && <Confirm>장바구니에 상품을 담았습니다</Confirm>}
       </Main3>
     </>

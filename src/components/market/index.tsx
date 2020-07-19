@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import {
   Mobile,
@@ -11,6 +11,7 @@ import {
   TitleLeft,
 } from "./MarketStyle";
 import { NavLink } from "react-router-dom";
+import UserDataContext from "./../../store/UserData";
 /* 
 우측 상단에서 시장에 있는 ‘가게별’ 리스트업 / ‘품목별’ 리스트업 두 개의 버튼 중 하나를 선택 하면 그에 맞게 하단의 화면이 보여짐
     ‘가게별’ 리스트업 일 때 (DB, API 필요)
@@ -99,11 +100,33 @@ const CartWrap = () => {
 };
 
 const Market = (props: any) => {
-  // useEffect(() => {
-  //   console.log(props.history.location.state.data);
-  //   // TODO: 해당 data로 API 요청 필요
-  // }, [props]);
-
+  const context = useContext(UserDataContext);
+  useEffect(() => {
+    // console.log(props.history.location.state.data);
+    // TODO: 해당 data로 API 요청 필요
+    console.log(context);
+    async function getInfo(id: string) {
+      const store = await fetch(
+        `http://angelhack-2020-seoul-sos.ap-northeast-2.elasticbeanstalk.com/markets/${id}/stores`
+      );
+      const storeInfo = await store.json();
+      const product = await fetch(
+        `http://angelhack-2020-seoul-sos.ap-northeast-2.elasticbeanstalk.com/markets/${id}/products`
+      );
+      const productInfo = await product.json();
+      console.log(storeInfo, productInfo);
+      context.setData("storeInfo", {
+        store: storeInfo.data,
+        product: productInfo.data,
+      });
+    }
+    if (!context.data.market.id) {
+      const { id, name } = props.history.location.state;
+      console.log(id, name);
+      context.setData("market", { id, name });
+      getInfo(id);
+    }
+  }, []);
   return (
     <div>
       <Mobile />
@@ -111,7 +134,9 @@ const Market = (props: any) => {
         <TitleLeft>
           <Title>
             <Img src="/images/logo.png" alt="로고" />
-            <span className="title">대전 중앙시장</span>
+            <span className="title">
+              {context.data.market && context.data.market.name}
+            </span>
             <NavLink to="/address">
               <svg
                 width="14"
