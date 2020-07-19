@@ -1,46 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as S from './MarketsStyle'
 
+interface MarketType {
+    _id: string
+    name: string
+    address: string
+}
+
 const Markets = (props: any) => {
-    const markets = [
-        {
-            name: "한민 시장",
-            id: 1,
-            address: "대전 광역시 유성구 유성대로 740번길",
-            distance: 1.2
-        },
-        {
-            name: "대전 중앙 시장",
-            id: 2,
-            address: "대전광역시 동구 대전로 783",
-            distance: 0.9
-        },
-        {
-            name: "땡땡땡 시장",
-            id: 3,
-            address: "여기가 어디냐면요 여기가 어디냐면요",
-            distance: 1.4
-        }
-    ]
+    const [markets, setMarkets] = useState<MarketType[]>([])
 
     useEffect(() => {
         const getMarkets = async (userData: string) => {
             console.log(userData)
             const res = await fetch(`http://angelhack-2020-seoul-sos.ap-northeast-2.elasticbeanstalk.com/markets?address_contain=${userData}`)
             const result = await res.json()
-            console.log(result)
+            setMarkets(result.data)
         }
-
-
         const userData = props.history.location.state.data;
-        console.log(userData)
         getMarkets(userData);
-
-
-        // TODO: 해당 data로 API 요청 필요
     }, [props])
-
-
 
     return (
         <>
@@ -50,12 +29,12 @@ const Markets = (props: any) => {
             </S.Wrapper>
             <S.Hr />
             <S.MarketListWrapper>
-                {markets.map(market => {
+                {markets?.map((market: MarketType) => {
                     return (
-                        <S.MarketWrapper onClick={() => props.history.push('/market/', { data: market.id })}>
+                        <S.MarketWrapper onClick={() => props.history.push('/market/', { data: market._id })}>
                             <S.MarketTitleWrapper>
                                 <S.MarketTitle>{market.name}</S.MarketTitle>
-                                <S.MarketDistance>{market.distance}km</S.MarketDistance>
+                                <S.MarketDistance>{(Math.random() * (5)).toFixed(2)}km</S.MarketDistance>
                             </S.MarketTitleWrapper>
                             <S.MarketAddress>{market.address}</S.MarketAddress>
                         </S.MarketWrapper>
