@@ -48,13 +48,49 @@ export const CartOuterWrapper = styled.div`
   overflow-y: auto;
 `
 
-export const CartWrapper = styled.div`
+export const ShipOuterWrapper = styled.div`
   width: 327px;
   height: 105px;
   background-color: white;
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 15px;
+`
+
+export const CartWrapper = styled(ShipOuterWrapper)`
+  display : flex;
+`
+
+export const ItemImg = styled.img`
+  width: 87px;
+  height: 78px;
+`
+
+export const TextWrapper = styled.div`
+  display: flex; 
+  flex-direction: column;
+  position: relative;
+  left: 12px;
+  top: 5px;
+`
+
+export const StoreName = styled.p`
+  color: #828282;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 15px;
+`
+
+export const ItemName = styled.p`
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+`
+
+export const ItemPrice = styled.p`
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
 `
 
 export const ShipInfoWrapper = styled.div`
