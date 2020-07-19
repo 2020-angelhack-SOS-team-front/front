@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import {
   Mobile,
@@ -99,7 +99,13 @@ const CartWrap = () => {
   );
 };
 
-const Market = () => {
+const Market = (props: any) => {
+
+  useEffect(() => {
+    console.log(props.history.location.state.data)
+    // TODO: 해당 data로 API 요청 필요
+  }, [props])
+
   return (
     <div>
       <Mobile />
