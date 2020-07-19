@@ -24,9 +24,23 @@ const Markets = (props: any) => {
     ]
 
     useEffect(() => {
-        console.log(props.history.location.state.data)
+        const getMarkets = async (userData: string) => {
+            console.log(userData)
+            const res = await fetch(`http://angelhack-2020-seoul-sos.ap-northeast-2.elasticbeanstalk.com/markets?address_contain=${userData}`)
+            const result = await res.json()
+            console.log(result)
+        }
+
+
+        const userData = props.history.location.state.data;
+        console.log(userData)
+        getMarkets(userData);
+
+
         // TODO: 해당 data로 API 요청 필요
     }, [props])
+
+
 
     return (
         <>
