@@ -7,7 +7,6 @@ import {
   CustomLink,
   Link,
   ListBox,
-  Main,
   TitleRight,
   TitleLeft,
 } from "./MarketStyle";
@@ -119,9 +118,9 @@ const Market = () => {
                 <path
                   d="M2 2L7 7L12 2"
                   stroke="#333333"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </NavLink>
@@ -136,13 +135,11 @@ const Market = () => {
         <CustomLink exact to="/market/" activeClassName="active">
           <Link>가게별</Link>
         </CustomLink>
-        <CustomLink exact to="/market/category" activeClassName="active">
+        <CustomLink to="/market/category" activeClassName="active">
           <Link>품목별</Link>
         </CustomLink>
       </Select>
-      <Main>
-        <ListBox />
-      </Main>
+      <ListBox />
     </div>
   );
 };
