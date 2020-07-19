@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import * as S from './MarketsStyle'
+import UserDataContext from '../../store/UserData'
 
 interface MarketType {
     _id: string

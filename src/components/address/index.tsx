@@ -3,9 +3,6 @@ import * as S from './AddressStyle'
 import UserDataContext from '../../store/UserData'
 import { RouteComponentProps } from 'react-router-dom';
 
-// user가 주소를 입력하고 '확인' 버튼을 누르면
-// 다음 페이지로 넘길 때, OO시 OO구를 넘기고
-// markets 페이지에서 요청하기
 interface Props extends RouteComponentProps { }
 
 const Address = ({ history }: Props) => {
@@ -38,6 +35,8 @@ const Address = ({ history }: Props) => {
             "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
         document.body.appendChild(script)
     }, [])
+
+    console.log(value)
 
     return (
         <>

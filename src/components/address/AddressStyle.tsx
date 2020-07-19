@@ -82,3 +82,11 @@ export const SubmitBtn = styled.button`
     color: white;
     border-radius: 8px;
 `
+
+export const Hr = styled.hr`
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    margin-top: 15px;
+    color: #E0E0E0;
+`
