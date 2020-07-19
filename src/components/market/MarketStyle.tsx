@@ -244,7 +244,7 @@ export const Food = styled.div`
     vertical-align: middle;
     span {
       position: absolute;
-      top: 120px;
+      top: 5px;
       right: 5px;
     }
   }
@@ -330,12 +330,13 @@ export const List = () => {
   let id = 0;
   const onCart = (product: any) => () => {
     console.log(product);
-    context.setCart([...context.data.cart, product]);
+    console.log({ ...context.data, cart: [...context.data.cart, product] });
+    context.setCart({ ...context.data, cart: [...context.data.cart, product] });
     setCart(!isCart);
     id = setTimeout(() => {
       setCart(false);
+      console.log(context);
     }, 1000);
-    console.log(context);
   };
   useEffect(() => {
     return () => {

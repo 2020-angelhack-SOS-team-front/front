@@ -1,9 +1,10 @@
 import React from "react";
 
 export interface DataInterface {
-  address: string;
-  detailAddress: string;
-  market: { id: string; name: string };
+  address: "";
+  detailAddress: "";
+  market: { id: ""; name: "" };
+  selectStore: "";
   storeInfo: { store: []; product: [] };
   cart: [];
 }

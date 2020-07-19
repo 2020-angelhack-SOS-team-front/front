@@ -17,7 +17,7 @@ const UserDataProvider = ({ children }: any) => {
         data: value,
         setData: (key: string, changedValue: any) =>
           setValue({ ...value, [`${key}`]: changedValue }),
-        setCart: (cart: any) => setValue({ ...value, cart }),
+        setCart: (newValue: any) => setValue(newValue),
       }}
     >
       {children}
