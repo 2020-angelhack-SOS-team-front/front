@@ -15,6 +15,13 @@ const Cart = ({ history }: Props) => {
     const itemsPrice = 13650
     const finalPrice = itemsPrice + 3000
 
+    const dummyData = {
+        img: `/images/dummy_img.png`,
+        storeName: `만물 정육점`,
+        itemName: `계란 한판`,
+        itemPrice: 4900
+    }
+
     return (
         <>
             <img className="header" src="/images/header_img.png"></img>
@@ -26,17 +33,22 @@ const Cart = ({ history }: Props) => {
                     </S.TitleWrapper>
                 </S.TitleOuterWrapper>
                 <S.CartOuterWrapper>
-                    <S.CartWrapper>
+                    <S.ShipOuterWrapper>
                         <S.ShipInfoWrapper>
                             <S.LocationIcon src="/images/location_icon.png" />
                             <S.ShipTitle>현재 배송지</S.ShipTitle>
                         </S.ShipInfoWrapper>
                         <S.ShipContent>{shipInfo.address.concat(shipInfo.detailAddress)}</S.ShipContent>
+                    </S.ShipOuterWrapper>
+                    <S.CartWrapper>
+                        <S.ItemImg src={dummyData.img} />
+                        <S.TextWrapper>
+                            <S.StoreName>{dummyData.storeName}</S.StoreName>
+                            <S.ItemName>{dummyData.itemName}</S.ItemName>
+                            <S.ItemPrice>{dummyData.itemPrice.toLocaleString()}원</S.ItemPrice>
+                        </S.TextWrapper>
                     </S.CartWrapper>
-                    <S.CartWrapper></S.CartWrapper>
-                    <S.CartWrapper></S.CartWrapper>
-                    <S.CartWrapper></S.CartWrapper>
-                    <S.CartWrapper></S.CartWrapper>
+
                 </S.CartOuterWrapper>
                 <S.PurchaseInfo>
                     <S.PurchaseRow>
