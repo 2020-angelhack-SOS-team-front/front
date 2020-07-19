@@ -32,7 +32,7 @@ const Markets = (props: any) => {
             <S.MarketListWrapper>
                 {markets?.map((market: MarketType) => {
                     return (
-                        <S.MarketWrapper onClick={() => props.history.push('/market/', { data: market._id })}>
+                        <S.MarketWrapper onClick={() => props.history.push('/market/', { id: market._id, name: market.name })}>
                             <S.MarketTitleWrapper>
                                 <S.MarketTitle>{market.name}</S.MarketTitle>
                                 <S.MarketDistance>{(Math.random() * (5)).toFixed(2)}km</S.MarketDistance>
